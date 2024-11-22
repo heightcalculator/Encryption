@@ -218,3 +218,8 @@ for (let i = 0; i < splitCipherText.length; i++) {
 
 ## Full Code for Decryption
 The full decryption code is provided in [decryption.js](https://github.com/heightcalculator/Encryption/blob/main/decryption.js). The `decrypt(message)` function takes the Cipher Text string which is a Base 64 number as the input and outputs the plaintext string in Base 64
+
+# Why does RSA work?
+## Why is it secure?
+The main reason it is secure is because the key used to encrypt the message is different from the key used to decrypt the message. So the public key can be given out, allowing anyone to encrypt the message, however no one would be able to decrypt the message without the private key which you never share so no one has access to. 
+Although the public and private keys are mathematically linked, it is very hard to get from one to the other. The way we encrypt a message is $c = p^e \pmod{n}$ so we share e and n. However to decrypt the message, we use $p = c^d \pmod{n}$ where $d$ id part of the private key. To get d, we must solve $ed \equiv 1 \pmod{\phi(n)}$, but for that, we need to know what $\phi(n)$ is. To solve for that, we need the prime factorization of n. There does not exist an algorithm that can extremely efficiently solve for the prime factors of any number, so if $n$ is sufficiently large, then finding its prime factors of n could take thousands of years even with the best supercomputers if not more. Without the prime factors, you can not get the private key, and thus can not decrypt the message.
