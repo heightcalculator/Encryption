@@ -284,6 +284,10 @@
             n = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[0];
             d = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[1];
         }
+        if (n < 355n) {
+            document.getElementById("textOutput").value = "Error: n must be greater than 355";
+            return;
+        }
         encryptedText = decrypt(document.getElementById("textInput").value);
         document.getElementById("textOutput").value = encryptedText;
     }
