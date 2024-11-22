@@ -12,7 +12,9 @@ RSA uses different public and private keys that are mathematically linked but ev
 We can define the public key as follows:
 $$(n,e)$$
 
-Where $n=pq$ where $p$ and $q$ are 2 prime numbers (usually very large, and $p*q$ must be greater than at least 355) and $e$ is any integer greater than 1 that is relatively prime to the Euler's Totient Function, $\phi(n)$. $e$ is usually relatively small and is chosen to increase efficiency. To make sure $e$ and $\phi(n)$, we can check their GCD using the Euclidean Algorithm and make sure it is one. Because we may be dealing with large primes, we will use the JavaScript BigInt.
+Where $n=pq$ where $p$ and $q$ are 2 prime numbers (usually very large, and $p*q$ must be greater than at least 355) and $e$ is any integer greater than 1 that is relatively prime to the Euler's Totient Function, $\phi(n)$. $e$ is usually relatively small and is chosen to increase efficiency of the algorithm. To make sure $e$ and $\phi(n)$ are relatively prime, we can check their GCD using the Euclidean Algorithm and make sure it is equal to 1.
+
+Because we may be dealing with large primes, we will use the JavaScript BigInt for all our calculations:
 ```js
 function gcd(int1, int2) {
     int1 = BigInt(int1), int2 = BigInt(int2);
