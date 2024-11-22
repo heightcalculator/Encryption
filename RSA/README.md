@@ -69,7 +69,7 @@ function privateKey(p, q, e) {
     }
     let eulersFunction = (p - 1n) * (q - 1n);
     while (gcd(eulersFunction, e) != 1) {
-	    e++;
+        e++;
     }
     let d = bezout(e, eulersFunction)[0];
     d = d >= 0n ? d : eulersFunction + d;
@@ -106,14 +106,14 @@ function messageToChar(message) {
 We now need to break the String into the relevant lengths. We know the max number one of our characters can be converted into is 355. We need to find N, where N is the max number (maximum helps ensure greater security) of 355s that can be used to make the number 355355355... while the number still being less than $n$ (keeping it less than $n$ ensures a unique modulo $n$ when being decrypted):
 ```js
 function numberOfN(n) {
-	n = BigInt(n);
-	let N = 0;
-	let number = "355";
-	while (BigInt(number) < n) {
-		number += 355;
-		N++;
-	}
-	return N;
+    n = BigInt(n);
+    let N = 0;
+    let number = "355";
+    while (BigInt(number) < n) {
+        number += 355;
+        N++;
+    }
+    return N;
 }
 ```
 Now in order to convert our String into numbers and make sure it is of relevant length, so it can be decrypted later, we need to make sure we split the string every N digits and every section of the string has the same number of digits. If any of the string has less digits than the rest, then when we convert the String to a number array, we can add extra empty strings in our array which has an ASCII value of 0, so our value of 100. This means we need to rewrite the `messageToChar` function as follows:
