@@ -53,5 +53,5 @@ for (let i = 0; i < message.length; i++) {
     plainText += String.fromCharCode((message.charCodeAt(i)-encryptionKey) % 255);
 }
 ```
-## Full code for Encryption
+## Full code for Decryption
 The full encryption code is provided in [CaesarDecryption.js](https://github.com/heightcalculator/Encryption/blob/main/CaesarCipher/CaesarDecryption.js). The decrypt(key, cipher) function takes the ciphertext string as an input and outputs the String of plaintext.
