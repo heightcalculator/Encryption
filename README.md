@@ -7,7 +7,7 @@ Preview the RSA Encryption Here: [https://rsa.aarushmagic.com/preview](https://r
 
 # RSA's Encryption Keys
 
-RSA uses different public and private keys that are mathematically linked but using modern day supercomputers, it could take billions of years to figure out the private key from the public key. However, using Shor's Algorithm, Quantum Computers can easily calculate the Private Key given a public key, so RSA is no longer one of the most secure encryption methods but it is still a standard method in a lot of applications.
+RSA uses different public and private keys that are mathematically linked but even by using modern day supercomputers, it could take billions of years to figure out the private key given the public key. However, using Shor's Algorithm, Quantum Computers can easily calculate the Private Key given a public key, so RSA is no longer one of the most secure encryption methods but it is still a standard method in a lot of applications.
 ## Public Key
 We can define the public key as follows:
 $$(n,e)$$
