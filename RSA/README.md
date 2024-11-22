@@ -303,7 +303,7 @@ The `decrypt(message)` function takes the Cipher Text string which is a Base 64 
 Note, you don't have to hard code n and d because only you will have access to the private key so you can see the primes and it will create no problem
 */
 const n = privateKey(p, q, e)[0];
-const d = privateKey(p, q, e)[0];
+const d = privateKey(p, q, e)[1];
 
 // Define functions to help get the Private Key
 function gcd(int1, int2) {
