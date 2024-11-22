@@ -10,7 +10,7 @@ RSA uses different public and private keys that are mathematically linked but us
 We can define the public key as follows:
 $$(n,e)$$
 
-Where $n=pq$ where $p$ and $q$ are 2 prime numbers (usually large) and $e$ is any integer greater than 1 that is relatively prime to the Euler's Totient Function, $\phi(n)$. $e$ is usually relatively small and is chosen to increase efficiency. To make sure $e$ and $\phi(n)$, we can check their GCD using the Euclidean Algorithm and make sure it is one. Because we may be dealing with large primes, we will use the JavaScript BigInt.
+Where $n=pq$ where $p$ and $q$ are 2 prime numbers (usually large, however $p*q$ has to be greater than 355) and $e$ is any integer greater than 1 that is relatively prime to the Euler's Totient Function, $\phi(n)$. $e$ is usually relatively small and is chosen to increase efficiency. To make sure $e$ and $\phi(n)$, we can check their GCD using the Euclidean Algorithm and make sure it is one. Because we may be dealing with large primes, we will use the JavaScript BigInt.
 ```js
 function gcd(int1, int2) {
     int1 = BigInt(int1), int2 = BigInt(int2);
@@ -19,9 +19,12 @@ function gcd(int1, int2) {
 
 function publicKey(p, q, e) {
     p = BigInt(p), q = BigInt(q), e = BigInt(e);
+    if (p * q < 355n) {
+        return false;
+    }
     let eulersFunction = (p - 1n) * (q - 1n);
     while (gcd(eulersFunction, e) != 1) {
-	    e++;
+        e++;
     }
     return [p * q, e];
 }
@@ -61,6 +64,9 @@ $d$ is the Bezout coefficient of $e$ in modular $\phi(n)$. This gives us:
 ```js
 function privateKey(p, q, e) {
     p = BigInt(p), q = BigInt(q), e = BigInt(e);
+    if (p * q < 355n) {
+        return false;
+    }
     let eulersFunction = (p - 1n) * (q - 1n);
     while (gcd(eulersFunction, e) != 1) {
 	    e++;
