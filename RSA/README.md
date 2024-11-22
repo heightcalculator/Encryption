@@ -1,6 +1,8 @@
 # RSA Encryption
 RSA Encryption is an encryption method that uses different Public and Private keys where the key used to encrypt the message is different from the key used to decrypt the message. "RSA" stands for the last initials of Ron Rivest, Adi Shamir and Leonard Adleman, who are the people usually credited for the creation of RSA in 1977, however, a very similar encryption algorithm was initially developed by Clifford Cocks in 1973 for the British Signals Intelligence Agency, however was not declassified until 1997.
 
+**Please note: This page only teaches you how to implement the very elementary level RSA algorithm and may be extremely prone to cyber attacks and should only be used for educational purpose and not to encrypt secure or classified data.**
+
 # RSA's Encryption Keys
 
 RSA uses different public and private keys that are mathematically linked but using modern day supercomputers, it could take billions of years to figure out the private key from the public key. However, using Shor's Algorithm, Quantum Computers can easily calculate the Private Key given a public key, so RSA is no longer one of the most secure encryption methods but it is still a standard method in a lot of applications.
