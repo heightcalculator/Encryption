@@ -31,6 +31,9 @@ function bezout(a, b) {
 
 function privateKey(p, q, e) {
     p = BigInt(p), q = BigInt(q), e = BigInt(e);
+    if (p * q < 355n) {
+        return false;
+    }
     let eulersFunction = (p - 1n) * (q - 1n);
     while (gcd(eulersFunction, e) != 1) {
         e++;
