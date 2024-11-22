@@ -3,5 +3,5 @@ function encrypt(encryptionKey, message){
     for (let i = 0; i < message.length; i++) {
         crypticMessage += String.fromCharCode((message.charCodeAt(i)+encryptionKey) % 255);
     }
-    return crypticMessage
+    return crypticMessage;
 }
