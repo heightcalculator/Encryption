@@ -282,7 +282,7 @@
             d = BigInt(document.getElementById("keyD2").value);
         } else {
             n = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[0];
-            d = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[0];
+            d = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[1];
         }
         encryptedText = decrypt(document.getElementById("textInput").value);
         document.getElementById("textOutput").value = encryptedText;
