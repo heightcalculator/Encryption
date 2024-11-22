@@ -251,6 +251,10 @@
         console.log("Click")
         n = BigInt(document.getElementById("keyN").value);
         e = BigInt(document.getElementById("keyE").value);
+        if (BigInt(document.getElementById("keyN").value) < 355n) {
+            document.getElementById("textOutput").value = "n must be greater than 355";
+            return;
+        }
         encryptedText = encrypt(document.getElementById("textInput").value);
         document.getElementById("textOutput").value = encryptedText;
     }
