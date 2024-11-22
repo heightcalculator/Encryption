@@ -139,7 +139,7 @@ function messageToChar(message, n) {
 ```
 
 ## Performing the Encryption
-Now to encrypt, we take the numbers corresponding to the strings (for example "A"=165, "B"=166, so "AB"=165166) of size $N$ (lets call these numbers $p$ for plaintext) and perform the following operation: $c = p^e \pmod{n}$ where $c$ is the ciphertext. Then we combine all of the ciphertext numbers with a delimiter (in our example, we used % as the delimiter) to create our encrypted message:
+Now to encrypt, we take the numbers corresponding to the strings (for example "A"=165, "B"=166, so "AB"=165166 and "AB" has a size of 2) of size $N$ (lets call these numbers $p$ for plaintext) and perform the following operation: $c = p^e \pmod{n}$ where $c$ is the ciphertext. Then we combine all of the ciphertext numbers with a delimiter (in our example, we used # as the delimiter) to create our encrypted message:
 ```js
 let newString = "";
 for (let i = 0; i < messageToChar(message, n).length; i += numberOfN(n)) {
