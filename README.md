@@ -224,13 +224,11 @@ The full decryption code is provided in [decryption.js](https://github.com/heigh
 Anytime we want to encrypt a message, we can perform whatever operation so the ciphertext does not resemble the plaintext and can be converted back into plaintext using some operation. For RSA, the way we have defined our encryption process is $c = p^e \pmod{n}$ where p is the plaintext, c is the ciphertext, n is the product of primes and e is the exponent for encryption such that $e$ and $\phi(n)$ are relatively prime (they need to be relatively prime so we can solve  $ed \equiv 1 \pmod{\phi(n)}$ for $d$, which is our private key).
 
 Now let's look at the following operation: $c^d \pmod{n}$.
+```math
+\begin{align} c^d \pmod{n} &= (p^e)^d \pmod{n} &\text{Given that we encrypted } c=p^e\pmod{n}\\ &= p^{ed} \pmod{n} &\text{Combining exponents}\\ &= p^{\phi(n) * q+1} \pmod{n} &\text{Given }ed\equiv 1 \pmod{\phi(n)} \text{ so } ed = \phi(n) * q+1\\ &= p^{\phi(n) * q} * p \pmod{n} &\text{Splitting the exponents}\\ &\equiv 1^{q} * p \pmod{n} &\text{Using the property: } a^{\phi(m)} \equiv 1 \pmod{m}\\ &= p \pmod{n} &\text{Given }1^x=1 \quad \forall x \in \mathbb{R}\\ &= p & p \text{ was defined such that } 0 \leq p < n \end{align}
+```
 
-$$\begin{align} c^d \pmod{n} &= (p^e)^d \pmod{n} &\text{Given that we encrypted } c=p^e\pmod{n}\\ &= p^{ed} \pmod{n} &\text{Combining exponents}\\ &= p^{\phi(n) * q+1} \pmod{n} &\text{Given }ed\equiv 1 \pmod{\phi(n)} \text{ so } ed = \phi(n) * q+1\\ &= p^{\phi(n) * q} * p \pmod{n} &\text{Splitting the exponents}\\ &\equiv 1^{q} * p \pmod{n} &\text{Using the property: } a^{\phi(m)} \equiv 1 \pmod{m}\\ &= p \pmod{n} &\text{Given }1^x=1 \quad \forall x \in \mathbb{R}\\ &= p &p \text{ was defined such that } 0\leq p <n \end{align}$$
-
-To find $d$, we used $ed \equiv 1 \pmod{\phi(n)}$, so by definition of modulus, we know $ed = q*\phi(n)+1$ for some integer value of q. We can use this to rewrite our equation from before: $p^{ed} \pmod{n} = p^{q*\phi(n)+1} \pmod{n} = p^{q*\phi(n)} * p \pmod{n}$.
-Now we can use the property that $a^{\phi{(m)}} \equiv 1 \pmod{m}$ so we get $p^{q*\phi(n)} * p \equiv 1^q*p \equiv p \pmod{n}$.
-
-When we encrypted the message, we made sure that $0 \leq p < n$, so we see that $p \pmod{n} = p$. Here, we have gotten that $c^d \pmod{n} = p$, so by doing this operation, to the ciphertext, we can get back our plaintext!
+Here, we have gotten that $c^d \pmod{n} = p$, so by doing the operation $c^d \pmod{n}$, we can convert the ciphertext back to our plaintext!
 ## Why is it secure?
 The main reason it is secure is because the key used to encrypt the message is different from the key used to decrypt the message. So the public key can be given out, allowing anyone to encrypt the message, however no one would be able to decrypt the message without the private key which you never share so no one has access to. 
 
