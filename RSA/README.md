@@ -182,7 +182,7 @@ let Base64 = (function () {
 })();
 ```
 ## Full Code for Encryption
-The full encryption code is provided in [encryption.js](https://github.com/heightcalculator/Encryption/blob/main/RSA/encryption.js). The `encrypt(message)` function takes the Plain Text string as an input and outputs the String of ciphertext numbers in Base 64
+The full encryption code is provided in [RSAencryption.js](https://github.com/heightcalculator/Encryption/blob/main/RSA/RSAencryption.js). The `encrypt(message)` function takes the Plain Text string as an input and outputs the String of ciphertext numbers in Base 64
 
 # To Decrypt
 
@@ -213,4 +213,4 @@ for (let i = 0; i < splitCipherText.length; i++) {
 ```
 
 ## Full Code for Decryption
-The full decryption code is provided in [decryption.js](https://github.com/heightcalculator/Encryption/blob/main/RSA/decryption.js). The `decrypt(message)` function takes the Cipher Text string which is a Base 64 number as the input and outputs the plaintext string in Base 64
+The full decryption code is provided in [RSAdecryption.js](https://github.com/heightcalculator/Encryption/blob/main/RSA/RSAdecryption.js). The `decrypt(message)` function takes the Cipher Text string which is a Base 64 number as the input and outputs the plaintext string in Base 64
