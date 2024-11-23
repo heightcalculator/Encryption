@@ -221,7 +221,7 @@ The full decryption code is provided in [decryption.js](https://github.com/heigh
 
 # Why does RSA work?
 ## The math behind it
-Anytime we want to encrypt a message, we can perform whatever operation so the ciphertext does not resemble the plaintext and can be converted back into plaintext using some operation. For RSA, the way we have defined our encryption process is $c = p^e \pmod{n}$ where p is the plaintext, c is the ciphertext, n is the product of primes and e is the exponent for encryption such that $e$ and $\phi(n)$ are relatively prime (they need to be relatively prime so we can solve  $ed \equiv 1 \pmod{\phi(n)}$ for $d$, which is our private key).
+Anytime we want to encrypt a message, we can perform whatever operation so the ciphertext does not resemble the plaintext and can be converted back into plaintext using some operation. For RSA, the way we have defined our encryption process is $c = p^e \pmod{n}$ where p is the plaintext, c is the ciphertext, n is the product of primes and e is the exponent for encryption such that $e$ and the euler's totient function of n, $\phi(n)$, are relatively prime (they need to be relatively prime so we can solve  $ed \equiv 1 \pmod{\phi(n)}$ for $d$, which is our private key).
 
 Now let's look at the following operation: $c^d \pmod{n}$.
 ```math
