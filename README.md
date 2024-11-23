@@ -225,7 +225,7 @@ Anytime we want to encrypt a message, we can perform whatever operation so the c
 
 Now let's look at the following operation: $c^d \pmod{n}$.
 ```math
-\begin{align} c^d \pmod{n} &= (p^e)^d \pmod{n} &\text{Given that we encrypted } c=p^e\pmod{n}\\ &= p^{ed} \pmod{n} &\text{Combining exponents}\\ &= p^{\phi(n) * q+1} \pmod{n} &\text{Given }ed\equiv 1 \pmod{\phi(n)} \text{ so } ed = \phi(n) * q+1\\ &= p^{\phi(n) * q} * p \pmod{n} &\text{Splitting the exponents}\\ &\equiv 1^{q} * p \pmod{n} &\text{Using the property: } a^{\phi(m)} \equiv 1 \pmod{m}\\ &= p \pmod{n} &\text{Given }1^x=1 \quad \forall x \in \mathbb{R}\\ &= p & p \text{ was defined such that } 0 \leq p < n \end{align}
+\begin{align} c^d \pmod{n} &= (p^e)^d \pmod{n} &\text{Given that we encrypted } c=p^e\pmod{n}\\ &= p^{ed} \pmod{n} &\text{Combining exponents}\\ &= p^{\phi(n) * z+1} \pmod{n} &\text{Given }ed\equiv 1 \pmod{\phi(n)} \text{ so } ed = \phi(n) * z+1\\ &= p^{\phi(n) * z} * p \pmod{n} &\text{Splitting the exponents}\\ &\equiv 1^{z} * p \pmod{n} &\text{Using the property: } a^{\phi(m)} \equiv 1 \pmod{m}\\ &= p \pmod{n} &\text{Given }1^x=1 \quad \forall x \in \mathbb{R}\\ &= p & p \text{ was defined such that } 0 \leq p < n \end{align}
 ```
 
 Here, we have gotten that $c^d \pmod{n} = p$, so by doing the operation $c^d \pmod{n}$, we can convert the ciphertext back to our plaintext!
