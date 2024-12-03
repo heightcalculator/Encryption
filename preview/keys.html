@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="robots" content="noindex">
+    <meta name="AdsBot-Google" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        input {
+            width: calc(100% - 35px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="navBar">
+            <a href="index.html"><span style="padding-right: 5px">Encrypt</span></a>
+            <a href="decrypt.html"><span style="padding-right: 5px">Decrypt</span></a>
+            <a href="keys.html"><span style="padding-right: 15px">Keys</span></a>
+        </div>
+        <h1>RSA Encryption</h1>
+        <h3>Key Generator</h3>
+        p: <input type="number" id="keyP" placeholder="Enter a large prime number"></input><br>
+        q: <input type="number" id="keyQ" placeholder="Enter another large prime number"></input><br>
+        e: <input type="number" id="keyE" placeholder="Enter an encryption exponent"></input>
+        <button onclick="update()"><span>Generate Keys</span></button>
+        <h3>Public Key</h3>
+        <textarea disabled id="textInput" placeholder="Your public key will show here"></textarea><br>
+        <h3>Private Key</h3>
+        <textarea disabled id="textOutput" placeholder="Your private key will show here"></textarea>
+</body>
+
+</html>
+<script src="generateKeys.js"></script>
