@@ -50,12 +50,12 @@ function privateKey(p, q, e) {
 }
 
 function update() {
-    if (document.getElementById("keyP").value == "undefined" || document.getElementById("keyQ").value == "undefined") {
+    if (document.getElementById("keyP").value == "" || document.getElementById("keyQ").value == "") {
         const primes = generateTwoPrimes(154);
         document.getElementById("keyP").value = primes[0];
         document.getElementById("keyQ").value = primes[1];
     }
-    if (document.getElementById("keyE").value == "undefined"){
+    if (document.getElementById("keyE").value == ""){
         document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
     }
     let p = BigInt(document.getElementById("keyP").value)
