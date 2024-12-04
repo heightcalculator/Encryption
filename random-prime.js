@@ -2,10 +2,19 @@
 function getRandomPrime(length) {
     // Generate a random number of the specified length
     function getRandomNumber(length) {
-        const min = BigInt('1' + '0'.repeat(length - 1)); // Smallest number with the given length
-        const max = BigInt('9'.repeat(length)); // Largest number with the given length
-        const range = max - min + 1n;
-        return min + BigInt(Math.floor(Math.random() * Number(range)));
+        const arrayLength = Math.ceil((length * Math.log2(10)) / 8); // Approx. bits required
+        const randomBytes = new Uint8Array(arrayLength);
+        crypto.getRandomValues(randomBytes);
+
+        // Convert bytes to a big integer string
+        let randomNum = Array.from(randomBytes)
+            .map(byte => byte.toString(16).padStart(2, '0'))
+            .join('');
+        randomNum = BigInt('0x' + randomNum);
+
+        const min = BigInt('1' + '0'.repeat(length - 1)); // Minimum value with desired length
+        const max = BigInt('9'.repeat(length)); // Maximum value with desired length
+        return min + (randomNum % (max - min + 1n)); // Ensure within range
     }
 
     // Sieve of Eratosthenes to generate small primes up to a limit
