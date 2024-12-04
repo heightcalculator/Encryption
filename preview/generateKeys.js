@@ -48,6 +48,39 @@ function privateKey(p, q, e) {
     d = d >= 0n ? d : eulersFunction + d;
     return [p * q, d];
 }
+function isPrime(n, k = 7) { // `k` is the number of test iterations for accuracy
+        if (n <= 1n) return false;
+        if (n <= 3n) return true;
+        if (n % 2n === 0n) return false;
+
+        // Write n-1 as d * 2^r
+        let r = 0n;
+        let d = n - 1n;
+        while (d % 2n === 0n) {
+            d /= 2n;
+            r++;
+        }
+
+        // Miller-Rabin test
+        for (let i = 0; i < k; i++) {
+            const a = BigInt(2 + Math.floor(Math.random() * (Number(n - 4n))));
+            let x = modExp(a, d, n); // Compute a^d % n
+            if (x === 1n || x === n - 1n) continue;
+
+            let continueOuterLoop = false;
+            for (let j = 0; j < r - 1n; j++) {
+                x = modExp(x, 2n, n);
+                if (x === n - 1n) {
+                    continueOuterLoop = true;
+                    break;
+                }
+            }
+            if (continueOuterLoop) continue;
+
+            return false; // Composite
+        }
+        return true; // Probably prime
+    }
 
 function update() {
     if (!document.getElementById("keyP").value || !document.getElementById("keyQ").value) {
@@ -58,9 +91,13 @@ function update() {
     if (!document.getElementById("keyE").value){
         document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
     }
-    let p = BigInt(document.getElementById("keyP").value)
-    let q = BigInt(document.getElementById("keyQ").value)
-    let e = BigInt(document.getElementById("keyE").value)
+    let p = Math.abs(BigInt(document.getElementById("keyP").value))
+    let q = Math.abs(BigInt(document.getElementById("keyQ").value))
+    let e = Math.abs(BigInt(document.getElementById("keyE").value))
+    if (!isPrime(p) || !isPrime(q)) {
+        alert("Either p or q is not prime. Please try again")
+        return;
+    }
     let public = publicKey(p, q, e)
     let private = privateKey(p, q, e)
     document.getElementById("textInput").value = "n = " + public[0] + "\ne = " + public[1]
