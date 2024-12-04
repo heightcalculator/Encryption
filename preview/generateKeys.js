@@ -50,6 +50,7 @@ function privateKey(p, q, e) {
 }
 
 function update() {
+    document.getElementById("goAway").style.display = "none";
     let p = BigInt(document.getElementById("keyP").value)
     let q = BigInt(document.getElementById("keyQ").value)
     let e = BigInt(document.getElementById("keyE").value)
