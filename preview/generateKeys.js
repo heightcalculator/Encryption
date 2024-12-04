@@ -56,4 +56,6 @@
         let private = privateKey(p, q, e)
         document.getElementById("textInput").value = "n = " + public[0] + "\ne = " + public[1]
         document.getElementById("textOutput").value = "n = " + private[0] + "\nd = " + private[1]
+        document.getElementById("publicKeyUrl").innerHTML = "<a href='index.html/?n=" + public[0] + "&e=" + public[1] + "'>Use this public key to encrypt</a>"
+        document.getElementById("privateKeyUrl").innerHTML = "<a href='decrypt.html/?n=" + private[0] + "&d=" + private[1] + "'>Use this private key to decrypt</a>"
     }
