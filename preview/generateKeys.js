@@ -91,9 +91,9 @@ function update() {
     if (!document.getElementById("keyE").value){
         document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
     }
-    let p = Math.abs(BigInt(document.getElementById("keyP").value))
-    let q = Math.abs(BigInt(document.getElementById("keyQ").value))
-    let e = Math.abs(BigInt(document.getElementById("keyE").value))
+    let p = BigInt(document.getElementById("keyP").value) > 0n ? BigInt(document.getElementById("keyP").value) : BigInt(document.getElementById("keyP").value) * -1n
+    let q = BigInt(document.getElementById("keyQ").value) > 0n ? BigInt(document.getElementById("keyQ").value) : BigInt(document.getElementById("keyQ").value) * -1n
+    let e = BigInt(document.getElementById("keyE").value) > 0n ? BigInt(document.getElementById("keyE").value) : BigInt(document.getElementById("keyE").value) * -1n
     if (!isPrime(p) || !isPrime(q)) {
         alert("Either p or q is not prime. Please try again")
         return;
