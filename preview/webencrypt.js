@@ -75,7 +75,7 @@
             for (let j = 0; j < Ns; j++) {
                 toEncrypt = toEncrypt + messageArr[i + j];
             }
-            let relInt = (BigInt(toEncrypt) ** e) % n;
+            let relInt = modPow(BigInt(toEncrypt), e, n);
             let relInt64 = b.encode(relInt); //Converting Ciphertext number from Base 10 to Base 64
             newString += relInt64;
             newString += "#";
