@@ -95,3 +95,26 @@
         encryptedText = encrypt(document.getElementById("textInput").value);
         document.getElementById("textOutput").value = encryptedText;
     }
+
+    //Get the values of n and e directly from the URL
+    function getQueryStringParam(param) {
+            var url = window.location.toString();
+            url.match(/\?(.+)$/);
+            var params = RegExp.$1;
+            params = params.split("&");
+            var queryStringList = {};
+            for (var i = 0; i < params.length; i++) {
+                var tmp = params[i].split("=");
+                queryStringList[tmp[0]] = unescape(tmp[1]);
+            }
+            return decodeURIComponent(queryStringList[param]);
+        }
+    let UrlN = getQueryStringParam('n').split('+').join(' ');
+    let UrlE = getQueryStringParam('e').split('+').join(' ');
+    if (UrlN != "undefined") {
+        document.getElementById("keyN").value = UrlN;
+    }
+    if (UrlE != "undefined") {
+        document.getElementById("keyE").value = UrlE;
+    }
+    
