@@ -28,8 +28,7 @@
         q: <input type="number" id="keyQ" placeholder="Enter another large prime number"></input><br>
         e: <input type="number" id="keyE" placeholder="Enter an encryption exponent"></input>
         <button onclick="update()"><span>Generate Keys</span></button>
-        <h4>OR</h4>
-        <button onclick="randomKey()"><span>Generate Random 1024 Bit Keys</span></button>
+        <span id = "goAway"><a onclick="randomKey()">Or Generate Random 1024 Bit Keys</a></span>
         <h3>Public Key</h3>
         <textarea disabled id="textInput" placeholder="Your public key will show here"></textarea><br>
         <span id="publicKeyUrl"></span><br>
