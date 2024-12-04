@@ -195,7 +195,7 @@ function generateTwoPrimes(length) {
 }
 
 function randomKey(){
-    const primes = generateTwoPrimes(Math.floor(Math.random() * (115 - 100 + 1) + 100););
+    const primes = generateTwoPrimes(Math.floor(Math.random() * (115 - 100 + 1) + 100));
     document.getElementById("keyP").value = primes[0];
     document.getElementById("keyQ").value = primes[1];
     document.getElementById("keyE").value = Math.floor(Math.random() * 1000000000);
