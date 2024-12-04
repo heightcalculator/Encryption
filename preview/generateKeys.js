@@ -197,10 +197,6 @@ function randomKey(){
     const primes = generateTwoPrimes(154);
     document.getElementById("keyP").value = primes[0];
     document.getElementById("keyQ").value = primes[1];
-    let randE = Math.floor(Math.random() * 1000000000);
-    while (gcd(eulersFunction, randE) != 1) {
-        randE++;
-    }
-    document.getElementById("keyE").value = randE;
+    document.getElementById("keyE").value = Math.floor(Math.random() * 1000000000);
     update();
 }
