@@ -50,7 +50,14 @@ function privateKey(p, q, e) {
 }
 
 function update() {
-    document.getElementById("goAway").style.display = "none";
+    if (document.getElementById("keyP").value == "undefined" || document.getElementById("keyQ").value == "undefined") {
+        const primes = generateTwoPrimes(154);
+        document.getElementById("keyP").value = primes[0];
+        document.getElementById("keyQ").value = primes[1];
+    }
+    if (document.getElementById("keyE").value == "undefined"){
+        document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
+    }
     let p = BigInt(document.getElementById("keyP").value)
     let q = BigInt(document.getElementById("keyQ").value)
     let e = BigInt(document.getElementById("keyE").value)
@@ -192,12 +199,4 @@ function generateTwoPrimes(length) {
     } while (prime1 === prime2); // Ensure the primes are distinct
 
     return [prime1, prime2];
-}
-
-function randomKey(){
-    const primes = generateTwoPrimes(154);
-    document.getElementById("keyP").value = primes[0];
-    document.getElementById("keyQ").value = primes[1];
-    document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
-    update();
 }
