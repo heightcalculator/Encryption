@@ -48,39 +48,52 @@ function privateKey(p, q, e) {
     d = d >= 0n ? d : eulersFunction + d;
     return [p * q, d];
 }
-function isPrime(n, k = 7) { // `k` is the number of test iterations for accuracy
-        if (n <= 1n) return false;
-        if (n <= 3n) return true;
-        if (n % 2n === 0n) return false;
 
-        // Write n-1 as d * 2^r
-        let r = 0n;
-        let d = n - 1n;
-        while (d % 2n === 0n) {
-            d /= 2n;
-            r++;
-        }
-
-        // Miller-Rabin test
-        for (let i = 0; i < k; i++) {
-            const a = BigInt(2 + Math.floor(Math.random() * (Number(n - 4n))));
-            let x = modExp(a, d, n); // Compute a^d % n
-            if (x === 1n || x === n - 1n) continue;
-
-            let continueOuterLoop = false;
-            for (let j = 0; j < r - 1n; j++) {
-                x = modExp(x, 2n, n);
-                if (x === n - 1n) {
-                    continueOuterLoop = true;
-                    break;
-                }
-            }
-            if (continueOuterLoop) continue;
-
-            return false; // Composite
-        }
-        return true; // Probably prime
+// Modular exponentiation: base^exp % mod
+function modExp(base, exp, mod) {
+    let result = 1n;
+    base = base % mod;
+    while (exp > 0n) {
+        if (exp % 2n === 1n) result = (result * base) % mod;
+        exp /= 2n;
+        base = (base * base) % mod;
     }
+    return result;
+}
+
+function isPrime(n, k = 7) { // `k` is the number of test iterations for accuracy
+    if (n <= 1n) return false;
+    if (n <= 3n) return true;
+    if (n % 2n === 0n) return false;
+
+    // Write n-1 as d * 2^r
+    let r = 0n;
+    let d = n - 1n;
+    while (d % 2n === 0n) {
+        d /= 2n;
+        r++;
+    }
+
+    // Miller-Rabin test
+    for (let i = 0; i < k; i++) {
+        const a = BigInt(2 + Math.floor(Math.random() * (Number(n - 4n))));
+        let x = modExp(a, d, n); // Compute a^d % n
+        if (x === 1n || x === n - 1n) continue;
+
+        let continueOuterLoop = false;
+        for (let j = 0; j < r - 1n; j++) {
+            x = modExp(x, 2n, n);
+            if (x === n - 1n) {
+                continueOuterLoop = true;
+                break;
+            }
+        }
+        if (continueOuterLoop) continue;
+
+        return false; // Composite
+    }
+    return true; // Probably prime
+}
 
 function update() {
     if (!document.getElementById("keyP").value || !document.getElementById("keyQ").value) {
@@ -88,7 +101,7 @@ function update() {
         document.getElementById("keyP").value = primes[0];
         document.getElementById("keyQ").value = primes[1];
     }
-    if (!document.getElementById("keyE").value){
+    if (!document.getElementById("keyE").value) {
         document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
     }
     let p = BigInt(document.getElementById("keyP").value) > 0n ? BigInt(document.getElementById("keyP").value) : BigInt(document.getElementById("keyP").value) * -1n
@@ -151,18 +164,6 @@ function getRandomPrime(length) {
         return false;
     }
 
-    // Modular exponentiation: base^exp % mod
-    function modExp(base, exp, mod) {
-        let result = 1n;
-        base = base % mod;
-        while (exp > 0n) {
-            if (exp % 2n === 1n) result = (result * base) % mod;
-            exp /= 2n;
-            base = (base * base) % mod;
-        }
-        return result;
-    }
-
     // Miller-Rabin test with one base (base 2)
     function millerRabinBase2(n) {
         if (n <= 1n || n % 2n === 0n) return false;
@@ -183,40 +184,6 @@ function getRandomPrime(length) {
             r--;
         }
         return false;
-    }
-
-    function isPrime(n, k = 7) { // `k` is the number of test iterations for accuracy
-        if (n <= 1n) return false;
-        if (n <= 3n) return true;
-        if (n % 2n === 0n) return false;
-
-        // Write n-1 as d * 2^r
-        let r = 0n;
-        let d = n - 1n;
-        while (d % 2n === 0n) {
-            d /= 2n;
-            r++;
-        }
-
-        // Miller-Rabin test
-        for (let i = 0; i < k; i++) {
-            const a = BigInt(2 + Math.floor(Math.random() * (Number(n - 4n))));
-            let x = modExp(a, d, n); // Compute a^d % n
-            if (x === 1n || x === n - 1n) continue;
-
-            let continueOuterLoop = false;
-            for (let j = 0; j < r - 1n; j++) {
-                x = modExp(x, 2n, n);
-                if (x === n - 1n) {
-                    continueOuterLoop = true;
-                    break;
-                }
-            }
-            if (continueOuterLoop) continue;
-
-            return false; // Composite
-        }
-        return true; // Probably prime
     }
 
     // Generate a random prime number of the given length
