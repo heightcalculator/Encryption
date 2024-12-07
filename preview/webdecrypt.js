@@ -66,7 +66,7 @@
                 result += BigInt(ALPHA.indexOf(value[i]));
             }
             return result;
-        };
+        }; 
         Base64.prototype = {
             constructor: Base64,
             encode: _encode,
@@ -98,12 +98,8 @@
         if (document.getElementById("keyN1").value != "" && document.getElementById("keyD1").value != "") {
             n = BigInt(document.getElementById("keyN1").value);
             d = BigInt(document.getElementById("keyD1").value);
-        } else if (document.getElementById("keyP2").value != "" && document.getElementById("keyQ2").value != "" && document.getElementById("keyD2").value != "") {
-            n = BigInt(document.getElementById("keyP2").value)*BigInt(document.getElementById("keyQ2").value);
-            d = BigInt(document.getElementById("keyD2").value);
         } else {
-            n = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[0];
-            d = privateKey(document.getElementById("keyP3").value, document.getElementById("keyQ3").value, document.getElementById("keyE3").value)[1];
+            return;
         }
         if (n < 355n) {
             document.getElementById("textOutput").value = "Error: n must be greater than 355";
