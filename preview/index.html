@@ -20,7 +20,7 @@
         <h1>RSA Encryption</h1>
         <h3>Public Key</h3>
         n: <input type="number" id="keyN" placeholder="Enter the product of primes"></input> e: <input type="number"
-            id="keyE" placeholder="Enter the exponent"></input>
+            id="keyE" placeholder="Enter the exponent"></input><br><span onclick="pemPrompt()">Or Enter Key in Pem Format</span>
         <h3>Plaintext</h3>
         <textarea id="textInput" placeholder="Type your text here"></textarea><br>
         <button onclick="update()"><span>Encrypt The Message</span></button>
@@ -30,3 +30,19 @@
 
 </html>
 <script src="webencrypt.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.min.js"></script>
+<script>
+    function publicKeyFromPem(publicKeyPem) {
+        let publicKeyAsPem = forge.pki.publicKeyFromPem(publicKeyPem);
+        let modulus = publicKeyAsPem.n;
+        let publicExponent = publicKeyAsPem.e;
+        return [modulus.toString(10), publicExponent.toString(10)];
+    }
+
+    function pemPrompt() {
+        let publicKeyPem = window.prompt("Enter Public Key in PEM Format:");
+        let publicKeyList = publicKeyFromPem(publicKeyPem);
+        document.getElementById("keyN").value = publicKeyList[0];
+        document.getElementById("keyE").value = publicKeyList[1];
+    }
+</script>
