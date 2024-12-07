@@ -102,7 +102,7 @@ function update() {
         document.getElementById("keyQ").value = primes[1];
     }
     if (!document.getElementById("keyE").value) {
-        document.getElementById("keyE").value = Math.floor(Math.random() * 100000);
+        document.getElementById("keyE").value = 65537;
     }
     let p = BigInt(document.getElementById("keyP").value) > 0n ? BigInt(document.getElementById("keyP").value) : BigInt(document.getElementById("keyP").value) * -1n
     let q = BigInt(document.getElementById("keyQ").value) > 0n ? BigInt(document.getElementById("keyQ").value) : BigInt(document.getElementById("keyQ").value) * -1n
