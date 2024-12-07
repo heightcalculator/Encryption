@@ -102,7 +102,7 @@ function update() {
         document.getElementById("keyQ").value = primes[1];
     }
     if (!document.getElementById("keyE").value) {
-        document.getElementById("keyE").value = Math.floor(Math.random() * 1000);
+        document.getElementById("keyE").value = Math.floor(Math.random() * 100000);
     }
     let p = BigInt(document.getElementById("keyP").value) > 0n ? BigInt(document.getElementById("keyP").value) : BigInt(document.getElementById("keyP").value) * -1n
     let q = BigInt(document.getElementById("keyQ").value) > 0n ? BigInt(document.getElementById("keyQ").value) : BigInt(document.getElementById("keyQ").value) * -1n
@@ -211,4 +211,95 @@ function generateTwoPrimes(length) {
     } while (prime1 === prime2); // Ensure the primes are distinct
 
     return [prime1, prime2];
+}
+
+function rsaPubKey() {
+    let p = BigInt(document.getElementById("keyP").value)
+    let q = BigInt(document.getElementById("keyQ").value)
+    let olde = BigInt(document.getElementById("keyE").value);
+    if (p * q < 355n) {
+        return false;
+    }
+    let eulersFunction = (p - 1n) * (q - 1n);
+    while (gcd(eulersFunction, olde) != 1) {
+        olde++;
+    }
+    let nDec = (p * q).toString()
+    let eDec = olde.toString()
+
+    // Convert decimal modulus (n) to BigInteger
+    const n = new forge.jsbn.BigInteger(nDec, 10);
+
+    // Convert decimal exponent (e) to BigInteger
+    const e = new forge.jsbn.BigInteger(eDec, 10);
+
+    // Create the public key object
+    const publicKey = forge.pki.setRsaPublicKey(n, e);
+
+    // Convert the public key object to PEM format
+    const pemKey = forge.pki.publicKeyToPem(publicKey);
+
+    // Display the PEM-formatted key
+    document.getElementById("textInput").value = pemKey
+}
+
+function rsaPrivKey() {
+    // Given RSA parameters
+    const pDec = BigInt(document.getElementById("keyP").value); // First prime factor
+    const qDec = BigInt(document.getElementById("keyQ").value); // Second prime factor
+    let eDec = BigInt(document.getElementById("keyE").value); // Public exponent
+    if (pDec * qDec < 355n) {
+        return false;
+    }
+    let eulersFunction = (pDec - 1n) * (qDec - 1n);
+    while (gcd(eulersFunction, eDec) != 1) {
+        eDec++;
+    }
+    let dold = bezout(eDec, eulersFunction)[0];
+    const dDec = dold >= 0n ? dold : eulersFunction + dold;
+
+    // Convert inputs to BigIntegers
+    const p = new forge.jsbn.BigInteger(pDec.toString(), 10);
+    const q = new forge.jsbn.BigInteger(qDec.toString(), 10);
+    const e = new forge.jsbn.BigInteger(eDec.toString(), 10);
+    const d = new forge.jsbn.BigInteger(dDec.toString(), 10);
+
+    // Calculate n (modulus)
+    const n = p.multiply(q);
+
+    // Calculate φ(n) = (p - 1) * (q - 1)
+    const phi = p.subtract(forge.jsbn.BigInteger.ONE).multiply(q.subtract(forge.jsbn.BigInteger.ONE));
+
+    // Calculate dp = d mod (p - 1)
+    const dp = d.mod(p.subtract(forge.jsbn.BigInteger.ONE));
+
+    // Calculate dq = d mod (q - 1)
+    const dq = d.mod(q.subtract(forge.jsbn.BigInteger.ONE));
+
+    // Calculate qInv = q^(-1) mod p
+    const qInv = q.modInverse(p);
+
+    // Create the private key object
+    const privateKey = forge.pki.setRsaPrivateKey(n, e, d, p, q, dp, dq, qInv);
+
+    // Convert the private key object to PEM format
+    const pemKey = forge.pki.privateKeyToPem(privateKey);
+
+    // Display the PEM-formatted private key
+    document.getElementById('textOutput').value = pemKey;
+}
+var RSABool = false;
+function switchStyle() {
+    if (!RSABool) {
+        document.getElementById("textInput").style.fontSize = "15px"
+        document.getElementById("textOutput").style.fontSize = "15px"
+        rsaPubKey()
+        rsaPrivKey()
+        RSABool = true;
+    } else {
+        document.getElementById("textInput").style.fontSize = "16px"
+        document.getElementById("textOutput").style.fontSize = "16px"
+        update()
+        RSABool = false;
+    }
 }
