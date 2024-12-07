@@ -116,7 +116,7 @@ function privateKey(p, q, e) {
     return [p * q, d];
 }
 ```
-Usually, the private key is not shared as just the n and e directly, but it is shared in the `PEM` format as a `.key` or `.pem` file type. We can use the following `node.js` code to convert the p, q, e and d into a PEM private key and back.
+Usually, the private key is not stored as just the n and e directly, but it is stored in the `PEM` format as a `.key` or `.pem` file type. We can use the following `node.js` code to convert the p, q, e and d into a PEM private key and back.
 
 First make sure to install node-forge using `npm install node-forge` in the terminal. Here is the code to convert n and e into PEM format:
 ```js
