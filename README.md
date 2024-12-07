@@ -33,6 +33,42 @@ function publicKey(p, q, e) {
     return [p * q, e];
 }
 ```
+Usually, the public key is not shared as just the n and e directly, but it is shared in the `PEM` format as a `.pem` file type. We can use the following `node.js` code to convert the n and e into a PEM public key and back.
+
+First make sure to install node-forge using `npm install node-forge` in the terminal. Here is the code to convert n and e into PEM format:
+```js
+const forge = require('node-forge');
+function toPublicPEM(n, e) {
+    // Convert decimal modulus (n) to BigInteger
+    n = new forge.jsbn.BigInteger(n.toString(), 10);
+    // Convert decimal exponent (e) to BigInteger
+    e = new forge.jsbn.BigInteger(e.toString(), 10);
+    // Create the public key object
+    const publicKey = forge.pki.setRsaPublicKey(n, e);
+    // Convert the public key object to PEM format
+    const pemKey = forge.pki.publicKeyToPem(publicKey);
+    // Return the PEM-formatted key
+    return pemKey;
+}
+```
+Here is the code to extract the values for n and e from a public key in PEM format:
+```js
+const forge = require('node-forge');
+function fromPublicPEM(pemKey) {
+    // Use Forge to parse the public key
+    const publicKey = forge.pki.publicKeyFromPem(pemKey);
+    // Extract the modulus (n) and exponent (e)
+    const n = publicKey.n.toString(10); // Modulus
+    const e = publicKey.e.toString(10); // Exponent
+    // Return the results ;
+    return [n,e];
+}
+```
+Since both of the above javascript codes require `node.js`, they can not run directly on a browser and are therefore not included in [encryption.js](https://github.com/heightcalculator/Encryption/blob/main/encryption.js). To do this step directly on the browser, the following script tag can be used in the HTML file in-place of `node-forge`: 
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.min.js" type="text/javascript"></script>
+```
+
 ## Private Key
 We can define the private key as follows:
 $$(n,d)$$
@@ -80,7 +116,53 @@ function privateKey(p, q, e) {
     return [p * q, d];
 }
 ```
+Usually, the private key is not shared as just the n and e directly, but it is shared in the `PEM` format as a `.key` or `.pem` file type. We can use the following `node.js` code to convert the p, q, e and d into a PEM private key and back.
 
+First make sure to install node-forge using `npm install node-forge` in the terminal. Here is the code to convert n and e into PEM format:
+```js
+const forge = require('node-forge');
+function toPrivatePEM(p, q, e, d) {
+    // Convert inputs to BigIntegers
+    p = new forge.jsbn.BigInteger(p.toString(), 10);
+    q = new forge.jsbn.BigInteger(q.toString(), 10);
+    e = new forge.jsbn.BigInteger(e.toString(), 10);
+    d = new forge.jsbn.BigInteger(d.toString(), 10);
+    // Calculate n (modulus)
+    const n = p.multiply(q);
+    // Calculate φ(n) = (p - 1) * (q - 1)
+    const phi = p.subtract(forge.jsbn.BigInteger.ONE).multiply(q.subtract(forge.jsbn.BigInteger.ONE));
+    // Calculate dp = d mod (p - 1)
+    const dp = d.mod(p.subtract(forge.jsbn.BigInteger.ONE));
+    // Calculate dq = d mod (q - 1)
+    const dq = d.mod(q.subtract(forge.jsbn.BigInteger.ONE));
+    // Calculate qInv = q^(-1) mod p
+    const qInv = q.modInverse(p);
+    // Create the private key object
+    const privateKey = forge.pki.setRsaPrivateKey(n, e, d, p, q, dp, dq, qInv);
+    // Convert the private key object to PEM format
+    const pemKey = forge.pki.privateKeyToPem(privateKey);
+    // Display the PEM-formatted private key
+    return pemKey;
+}
+```
+Here is the code to extract the values for n and e from a public key in PEM format:
+```js
+const forge = require('node-forge');
+function fromPrivatePEM(pemKey) {
+    // Use Forge to parse the private key
+    const privateKey = forge.pki.privateKeyFromPem(pemKey);
+    // Extract the modulus (n) and decryption exponent (d)
+    const n = privateKey.n.toString(10); // Modulus
+    const d = privateKey.d.toString(10); // Decryption Exponent
+    // Return the results ;
+    return [n,d];
+}
+```
+
+Since both of the above javascript codes require `node.js`, they can not run directly on a browser and are therefore not included in [decryption.js](https://github.com/heightcalculator/Encryption/blob/main/decryption.js). To do this step directly on the browser, the following script tag can be used in the HTML file in-place of `node-forge`: 
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.8.2/forge.min.js" type="text/javascript"></script>
+```
 # To Encrypt
 ## Modulus Algorithm
 In both, encryption and decryption, we will need to take the modulus of very large numbers, so it is best to define an algorithm to do so early. The following algorithm gives the result to $base^{expo} \pmod{p}$:
